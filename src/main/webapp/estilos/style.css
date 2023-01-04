@@ -2,6 +2,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
+@keyframes aparecer {
+    from{opacity: 0;}
+    to {opacity: 1;}
+}
+
 :root{
     --cor1: #5D2C81;
     --cor2: #366D71;
@@ -35,11 +40,9 @@ h1{text-align: center; padding: 8px;}
 
 main p{text-align: justify; padding: 0 16px 4px 16px;}
 
-.campos{padding: 4px 8px;}
+.campos{padding: 4px 8px; animation: aparecer 1s;}
 
 input{width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #999;}
-
-label{position: relative; top: 10px; display: none;}
 
 input[type=button]{cursor: pointer; font-weight: bolder; font-size: 16px;}
 

@@ -13,8 +13,7 @@
     main{width: 720px; height: 394px;}
     div.imagem{float: right; width: 50%; height: 100%; background-image: url('../imagens/code-screen.jpg');}
     div.formulario{ float: left; width: 50%;}
-    input{width: calc(100% - 30px); padding-bottom: 16px;}
-    input[type=button]{margin-left: 27px;} 
+    input{width: 100%; padding-bottom: 16px;} 
     label{display: inline;}
     main p{padding-bottom: 16px;}
     h1{padding: 16px;}

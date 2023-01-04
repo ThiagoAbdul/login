@@ -23,7 +23,6 @@ public class CadastroController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             out.println(nome.toLowerCase());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
