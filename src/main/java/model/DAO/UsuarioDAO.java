@@ -41,16 +41,4 @@ public class UsuarioDAO {
         }
     }
 
-    public static void main(String[] args) {
-        UsuarioDAO dao = new UsuarioDAO();
-        Usuario usuario = Usuario.builder()
-                            .cep("05054030")
-                            .email("thiagoabdul10@gmail.com")
-                            .nome("Thiago abdul")
-                            .telefone("11983368192")
-                            .hashSenha("dldspdkopsw7r7we7w454w8dw8dr8wd")
-                            .build();
-        dao.salvar(usuario);
-    }
-
 }

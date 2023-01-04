@@ -13,27 +13,27 @@
 <body>
     <main>
         <h1>Cadastrar</h1>
-        <form name="formCadastro" action="#" method="POST" autocomplete="on">
+        <form name="formCadastro" action="cadastro" method="POST" autocomplete="on">
             <div class="campos">
-                <input id="nome" type="text" placeholder="Nome">
+                <input id="nome" name="nome" type="text" placeholder="Nome">
             </div>
             <div class="campos">
-                <input id="telefone" type="text" placeholder="Telefone">
+                <input id="telefone" name="telefone" type="text" placeholder="Telefone">
             </div>
             <div class="campos">
-                <input id="cep" type="text" placeholder="Cep">
+                <input id="cep" name="cep" type="text" placeholder="Cep">
             </div>
             <div class="campos">
-                <input id="logradouro" type="text" placeholder="Logradouro">
+                <input id="logradouro" name="logradouro" type="text" placeholder="Logradouro">
             </div>
             <div class="campos">
-                <input id="localidade" type="text" placeholder="Cidade">
+                <input id="localidade" name="cidade" type="text" placeholder="Cidade">
             </div>
             <div class="campos">
-                <input id="uf" type="text" placeholder="Estado">
+                <input id="uf" name="estado" type="text" placeholder="Estado">
             </div>
             <div class="campos">
-                <input id="numero" type="text" placeholder="Numero">
+                <input id="numero" name="numero" type="text" placeholder="Numero">
             </div>
             <div class="campos">
                 <input id="login-email" name="email" type="text" placeholder="E-mail" autocomplete="email">
@@ -45,12 +45,15 @@
                 <input id="confirmar-senha" name="senha" type="password" placeholder="Confirme sua senha">
             </div>
             <div class="campos">
-                <input id="btn-cadastrar" class="button-a" type="button" value="Cadastrar" >
+                <input id="btn-cadastrar" class="button-a" type="button" value="Cadastrar" onclick="cadastrar()">
             </div>
             <div class="campos">
                 <a href="login.html" rel="_self"><input class="button-b" type="button" value="Voltar"></a>
             </div>
         </form>
     </main>
+    <script>
+        const cadastrar = () => formCadastro.submit()
+    </script>
 </body>
 </html>
