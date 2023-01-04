@@ -1,7 +1,6 @@
-const btnEntrar = document.querySelector("#btn-entrar")
-
-const getEmail = () => document.querySelector("#login-email").value
-const getSenha = () => document.querySelector("#login-senha").value
+const getEmail = () => cadastroEmail.value
+const getSenha = () => cadastroSenha.value
+const getConfirmarSenha = () => confirmarSenha.value
 
 const emailInvalido = () => {
     const email = getEmail()
@@ -27,14 +26,19 @@ const isSenhaFraca = () => {
             senhaNaoPossui(/.{12,}/)
 }
 
-btnEntrar.addEventListener('click', () => {
+const senhasDiferentes = () => getSenha() !== getConfirmarSenha()
+
+btnCadastrar.addEventListener('click', () => {
     if(emailInvalido()){
         alert('Favor, preencher o e-mail corretamente.')
     }
     else if(isSenhaFraca()){
         alert('Senha não atende os requisitos.')
     }
+    else if(senhasDiferentes()){
+        alert('Senhas não coincidem.')
+    }
     else{
-        formLogin.submit()
+        formCadastrar.submit()
     } 
 })

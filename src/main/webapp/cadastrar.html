@@ -36,24 +36,23 @@
                 <input id="numero" name="numero" type="text" placeholder="Numero">
             </div>
             <div class="campos">
-                <input id="login-email" name="email" type="text" placeholder="E-mail" autocomplete="email">
+                <input id="cadastroEmail" name="email" type="text" placeholder="E-mail" autocomplete="email">
             </div>
             <div class="campos">
-                <input id="cadastro-senha" name="senha" type="password" placeholder="Senha">
+                <input id="cadastroSenha" name="senha" type="password" placeholder="Senha">
             </div>
             <div class="campos">
-                <input id="confirmar-senha" name="senha" type="password" placeholder="Confirme sua senha">
+                <input id="confirmarSenha" name="senha" type="password" placeholder="Confirme sua senha">
             </div>
             <div class="campos">
-                <input id="btn-cadastrar" class="button-a" type="button" value="Cadastrar" onclick="cadastrar()">
+                <input id="btnCadastrar" class="button-a" type="button" value="Cadastrar">
             </div>
             <div class="campos">
                 <a href="login.html" rel="_self"><input class="button-b" type="button" value="Voltar"></a>
             </div>
         </form>
     </main>
-    <script>
-        const cadastrar = () => formCadastro.submit()
-    </script>
+    <script src="scripts/cep.js"></script>
+    <script src="scripts/cadastrar.js"></script>
 </body>
 </html>
