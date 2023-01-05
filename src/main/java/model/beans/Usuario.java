@@ -25,12 +25,14 @@ public class Usuario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome, telefone, cep; 
+    @Column(name = "numero_endereco")
+    private short numeroEndereco;
     @Column(unique = true)
     private String email;
     @Column(name = "hash_senha")
     private String hashSenha;
 
-    public Usuario(String nome, String telefone, String cep, String email, String hashSenha) {
+    public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String hashSenha) {
         this.nome = nome;
         this.telefone = telefone;
         this.cep = cep;

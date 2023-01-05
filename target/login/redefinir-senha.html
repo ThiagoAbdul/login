@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/style.css">
+    <link rel="stylesheet" href="estilos/media-queries.css">
+    <link rel="stylesheet" href="estilos/redefinir-senha.css">
+    <title>Redefinir</title>
+</head>
+<body>
+    <main>
+        <div class="imagem">
+            <!-- Imagem -->
+        </div>
+        <div class="formulario">
+            <h1>Redefinir senha</h1>
+            <p>
+                Insira o seu e-mail cadastrado para receber o link com a redefinição de senha.
+            </p>
+            <form name="formReset" method="get" action="redefinir-senha.html" autocomplete="on">
+                <div class="campos">
+                    <input id="reset-email" name="email" type="text" required placeholder="Seu e-mail" autocomplete="email">
+                </div>
+                <div class="campos">
+                    <input id="btn-enviar-reset" class="button-a" type="button" value="Enviar" >
+                </div>
+                <div class="campos">
+                    <a href="login.html" rel="_self"><input class="button-b" type="button" value="Voltar"></a>
+                </div>
+            </form>
+        </div>
+    </main>
+<script src="scripts/main.js"></script>
+</body>
+</html>

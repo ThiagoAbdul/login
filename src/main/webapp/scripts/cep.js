@@ -1,5 +1,3 @@
-const getCep = () => document.querySelector("#cep").value
-
 const formatarCep = (cep) => {
     if(cep.trim().match(/^\d{5}[-]\d{3}$/)){
         return cep.trim().replace("-", "")
@@ -7,8 +5,10 @@ const formatarCep = (cep) => {
     return cep.trim()   
 }
 
+const getCep = () => formatarCep(cep.value)
+
 const getUrl = () => {
-    const cep = formatarCep(getCep())
+    const cep = getCep()
     return `https://viacep.com.br/ws/${cep}/json`
 }
 
@@ -25,16 +25,17 @@ const limparCampos = () => {
         e.value = ""
     })
 }
-const naoForCep = (campo) => campo != 'cep'
+
+const isCampoValido = (campo) => ['logradouro', 'localidade', 'uf'].includes(campo)
 
 const preencherCampos = (json) => {
+    cep.value = getCep()
     let input
     for (campo in json){
-        input = getInput(campo)
-        if(input){
+        if(isCampoValido(campo)){ 
+            input = getInput(campo)
             input.value = json[campo]
-            if(naoForCep(campo)) 
-                setReadOnly(input, true)
+            setReadOnly(input, true)
         }
     }
 }

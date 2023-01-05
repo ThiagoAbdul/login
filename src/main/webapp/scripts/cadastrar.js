@@ -39,6 +39,6 @@ btnCadastrar.addEventListener('click', () => {
         alert('Senhas não coincidem.')
     }
     else{
-        formCadastrar.submit()
+        formCadastro.submit()
     } 
 })

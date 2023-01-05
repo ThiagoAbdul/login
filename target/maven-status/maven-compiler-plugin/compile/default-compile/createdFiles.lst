@@ -1,4 +1,0 @@
-model/beans/Usuario.class
-controller/CadastroController.class
-model/DAO/UsuarioDAO.class
-model/beans/Usuario$UsuarioBuilder.class
