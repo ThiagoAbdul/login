@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity(name="usuario")
@@ -30,15 +31,16 @@ public class Usuario implements Serializable{
     @Column(unique = true)
     private String email;
     @Column(name = "hash_senha")
-    private String hashSenha;
+    @Setter
+    private String senha;
 
-    public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String hashSenha) {
+    public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String senha) {
         this.nome = nome;
         this.telefone = telefone;
         this.cep = cep;
         this.numeroEndereco = numeroEndereco;
         this.email = email;
-        this.hashSenha = hashSenha;
+        this.senha = senha;
     }
 
 }

@@ -1,26 +1,29 @@
 package util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Criptografia {
 
-    private static final int HASH_SIZE = 40;
+    private final MessageDigest encoder;
 
-    private static final float MOD = 39;
-
-    public static String gerarHash(String senhaPlana, String email) throws IOException{
-        double semente = email.hashCode();
-        char [] hashArray = new char[HASH_SIZE];
-        long num;
-        int numeroSenha = getNumero(senhaPlana.concat(getSalt()));
-        for(int i = 0; i < HASH_SIZE; i++){
-            num = (long)(semente % MOD);
-            hashArray[i] = (char)(79 + num);
-            semente = ((semente * num - 13.4) % (numeroSenha));
+    public Criptografia(){
+        try {
+            encoder = MessageDigest.getInstance("sha256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException();
         }
-        return new String(hashArray);
+    }
+
+    public String gerarHash(String senhaPlana, String email) throws IOException{
+        String senhaComSalts = senhaPlana.concat(email).concat(getSalt());
+        byte[] hash = encoder.digest(senhaComSalts.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for(byte caracter : hash) sb.append(String.format("%02x", 0xFF & caracter));
+        return sb.toString();
     }
 
     private static String getSalt() throws IOException{
@@ -29,18 +32,8 @@ public class Criptografia {
         }
     }
 
-    private static int getNumero(String senhaPlana){
-        int total = 0;
-        for(char letra : senhaPlana.toCharArray()) total += letra;
-        return total;
-    }
-
     public boolean confirmarSenha(String senha, String email, String hash) throws IOException{
         return gerarHash(senha, email).equals(hash);
-    }
-
-    public static void main(String[] args) throws IOException {
-        System.out.println(gerarHash("Helo", "Thiago"));
     }
 
 }

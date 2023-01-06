@@ -1,5 +1,7 @@
 package model.DAO;
 
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,18 +18,10 @@ public class UsuarioDAO {
         em = emf.createEntityManager();
     }
 
-    public boolean salvar(Usuario usuario){
-        try{
+    public void salvar(Usuario usuario) throws SQLException{
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
-            return true;
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Erro ao salvar o usuário");
-            return false;
-        }
     }
 
     public void liberarRecurso(){

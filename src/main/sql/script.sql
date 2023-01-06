@@ -11,5 +11,5 @@ create table usuario(
     cep char(8) not null,
     numero_endereco smallint unsigned not null,
     email varchar(50) not null unique,
-    hash_senha char(40) not null
+    hash_senha char(64) not null
 ) engine innodb;
