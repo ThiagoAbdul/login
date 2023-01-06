@@ -36,6 +36,7 @@ public class Usuario implements Serializable{
         this.nome = nome;
         this.telefone = telefone;
         this.cep = cep;
+        this.numeroEndereco = numeroEndereco;
         this.email = email;
         this.hashSenha = hashSenha;
     }

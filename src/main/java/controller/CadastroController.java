@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.DAO.UsuarioDAO;
 import model.beans.Usuario;
+import util.Criptografia;
 
 @WebServlet(urlPatterns = {"/cadastro"})
 public class CadastroController extends HttpServlet {
@@ -22,17 +23,15 @@ public class CadastroController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
         try (PrintWriter out = response.getWriter()) {
-            out.println("1");
-            /* 
             Usuario usuario = criarUsuario(request);
-            out.println(usuario.getNome());
             UsuarioDAO dao = new UsuarioDAO();
             dao.salvar(usuario);
             dao.liberarRecurso();
-            */
+            response.sendRedirect("login.html");
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         
     }
@@ -44,7 +43,25 @@ public class CadastroController extends HttpServlet {
         short numero = Short.parseShort(request.getParameter("numero"));
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        return new Usuario(nome, cep, telefone, numero, email, senha);
+        
+        try {
+            String hashSenha = Criptografia.gerarHash(senha, email);
+
+            return Usuario.builder()
+            .nome(nome)
+            .telefone(telefone)
+            .cep(cep)
+            .numeroEndereco(numero)
+            .email(email)
+            .hashSenha(hashSenha)
+            .build();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            throw new RuntimeException("Deu ruim");
+        }
+        
+        
     }
 
 
