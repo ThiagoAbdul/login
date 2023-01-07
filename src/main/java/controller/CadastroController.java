@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import exceptions.EmailJaCadastradoException;
 import model.DAO.UsuarioDAO;
 import model.beans.Usuario;
 import util.Criptografia;
@@ -34,11 +35,14 @@ public class CadastroController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             Usuario usuario = criarUsuario(request);
             dao = new UsuarioDAO();
+            if(emailJaCadastrado(usuario.getEmail(), dao)){
+                throw new EmailJaCadastradoException();
+            }  
             dao.salvar(usuario);
             dao.liberarRecurso();
             response.sendRedirect("login.html");
 
-        } catch (IOException | SQLException e) {
+        } catch (IOException | SQLException | EmailJaCadastradoException e) {
             if(dao != null) dao.liberarRecurso();
             try {
                 response.sendRedirect("cadastrar.html");
@@ -72,6 +76,10 @@ public class CadastroController extends HttpServlet {
 
     private void criptografarSenha(Usuario usuario) throws IOException{
         usuario.setSenha(cripto.gerarHash(usuario.getSenha(), usuario.getEmail()));
+    }
+
+    private boolean emailJaCadastrado(String email, UsuarioDAO dao){
+        return dao.encontrouEmail(email);
     }
 
 }

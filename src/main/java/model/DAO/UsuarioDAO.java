@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import model.beans.Usuario;
 
@@ -33,6 +34,12 @@ public class UsuarioDAO {
             emf.close();
             emf = null;
         }
+    }
+
+    public boolean encontrouEmail(String email){
+        String SQL = "SELECT email FROM usuario WHERE email = '" + email + "' limit 1";
+        Query query = em.createNativeQuery(SQL);
+        return query.getResultList().size() > 0;
     }
 
 }
