@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
@@ -23,16 +22,27 @@ public class CadastroController extends HttpServlet {
         super();
         cripto = new Criptografia();
     }
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response){
-        doPost(request, response);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
+        try {
+            cadastrar(request);
+            response.sendRedirect("login.html");
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (EmailJaCadastradoException e) {
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        } 
+    }
+
+    private void cadastrar(HttpServletRequest request) throws EmailJaCadastradoException, IOException{
         UsuarioDAO dao = null;
-        try (PrintWriter out = response.getWriter()) {
+        try {
             Usuario usuario = criarUsuario(request);
             dao = new UsuarioDAO();
             if(emailJaCadastrado(usuario.getEmail(), dao)){
@@ -40,36 +50,24 @@ public class CadastroController extends HttpServlet {
             }  
             dao.salvar(usuario);
             dao.liberarRecurso();
-            response.sendRedirect("login.html");
-
-        } catch (IOException | SQLException | EmailJaCadastradoException e) {
+            
+        }
+        catch(SQLException e){
             if(dao != null) dao.liberarRecurso();
-            try {
-                response.sendRedirect("cadastrar.html");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
             e.printStackTrace();
         }
-        
     }
 
     private Usuario criarUsuario(HttpServletRequest request) throws IOException{
-        String nome = request.getParameter("nome");
-        String telefone = request.getParameter("telefone");
-        String cep = request.getParameter("cep");
-        short numero = Short.parseShort(request.getParameter("numero"));
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-    
         Usuario usuario = Usuario.builder()
-            .nome(nome)
-            .telefone(telefone)
-            .cep(cep)
-            .numeroEndereco(numero)
-            .email(email)
-            .senha(senha)
+            .nome(request.getParameter("nome"))
+            .telefone(request.getParameter("telefone"))
+            .cep(request.getParameter("cep"))
+            .numeroEndereco(Short.parseShort(request.getParameter("numero")))
+            .email(request.getParameter("email"))
+            .senha(request.getParameter("senha"))
             .build();
+
         criptografarSenha(usuario);
         return usuario;
     }
@@ -81,5 +79,4 @@ public class CadastroController extends HttpServlet {
     private boolean emailJaCadastrado(String email, UsuarioDAO dao){
         return dao.encontrouEmail(email);
     }
-
 }
