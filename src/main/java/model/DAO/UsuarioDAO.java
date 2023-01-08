@@ -37,8 +37,8 @@ public class UsuarioDAO {
     }
 
     public boolean encontrouEmail(String email){
-        String SQL = "SELECT email FROM usuario WHERE email = '" + email + "' limit 1";
-        Query query = em.createNativeQuery(SQL);
+        String SQL = "SELECT email FROM usuario WHERE email = :email limit 1";
+        Query query = em.createNativeQuery(SQL).setParameter("email", email);
         return query.getResultList().size() > 0;
     }
 
