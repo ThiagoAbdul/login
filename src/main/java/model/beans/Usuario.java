@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +19,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NamedQueries({
+    @NamedQuery(name = "buscarSenhaPeloEmail",
+                query = "select senha from usuario where email = :email"    
+    )
+})
 @Entity(name="usuario")
 @Table(name = "usuario")
 @Getter @EqualsAndHashCode @ToString @NoArgsConstructor @AllArgsConstructor @Builder

@@ -14,14 +14,7 @@ import model.beans.Usuario;
 import util.Criptografia;
 
 @WebServlet(urlPatterns = {"/cadastro"})
-public class CadastroController extends HttpServlet {
-
-    private final Criptografia cripto;
-
-    public CadastroController(){
-        super();
-        cripto = new Criptografia();
-    }
+public class CadastroController extends ServletController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
@@ -41,7 +34,6 @@ public class CadastroController extends HttpServlet {
     }
 
     private void cadastrar(HttpServletRequest request) throws EmailJaCadastradoException, IOException{
-        UsuarioDAO dao = null;
         try {
             Usuario usuario = criarUsuario(request);
             dao = new UsuarioDAO();

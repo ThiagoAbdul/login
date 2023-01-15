@@ -12,14 +12,14 @@ public class Criptografia {
 
     public Criptografia(){
         try {
-            encoder = MessageDigest.getInstance("sha256");
+            encoder = MessageDigest.getInstance("sha512");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException();
         }
     }
 
     public String gerarHash(String senhaPlana, String email) throws IOException{
-        String senhaComSalts = senhaPlana.concat(email).concat(getSalt());
+        String senhaComSalts = senhaPlana.concat(email.concat(getSalt()));
         byte[] hash = encoder.digest(senhaComSalts.getBytes());
         StringBuilder sb = new StringBuilder();
         for(byte caracter : hash) sb.append(String.format("%02x", 0xFF & caracter));
@@ -27,7 +27,7 @@ public class Criptografia {
     }
 
     private static String getSalt() throws IOException{
-        try(BufferedReader br = new BufferedReader(new FileReader("/home/abdul/Documentos/estudos/java/projects-workspace/login/src/main/resources/arquivos/.salt.txt"))){
+        try(BufferedReader br = new BufferedReader(new FileReader("../webapps/arquivos/.salt"))){
             return br.readLine();
         }
     }
@@ -35,5 +35,6 @@ public class Criptografia {
     public boolean confirmarSenha(String senha, String email, String hash) throws IOException{
         return gerarHash(senha, email).equals(hash);
     }
+
 
 }

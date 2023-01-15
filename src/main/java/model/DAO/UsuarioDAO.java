@@ -4,9 +4,12 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import exceptions.EmailNaoCadastradoException;
 import model.beans.Usuario;
 
 public class UsuarioDAO {
@@ -40,6 +43,19 @@ public class UsuarioDAO {
         String SQL = "SELECT email FROM usuario WHERE email = :email limit 1";
         Query query = em.createNativeQuery(SQL).setParameter("email", email);
         return query.getResultList().size() > 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String buscarSenhaPeloEmail(String email) throws EmailNaoCadastradoException{
+        TypedQuery<String> query = (TypedQuery<String>) em.createNamedQuery("buscarSenhaPeloEmail").setParameter("email", email);
+        try{
+            return query.getSingleResult();
+        }
+        catch(NoResultException e){
+            throw new EmailNaoCadastradoException();
+        }
+        
+
     }
 
 }
