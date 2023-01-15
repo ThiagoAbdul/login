@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import exceptions.EmailJaCadastradoException;
 import model.DAO.UsuarioDAO;
 import model.beans.Usuario;
-import util.Criptografia;
 
 @WebServlet(urlPatterns = {"/cadastro"})
 public class CadastroController extends ServletController {

@@ -46,8 +46,11 @@ public class UsuarioDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public String buscarSenhaPeloEmail(String email) throws EmailNaoCadastradoException{
-        TypedQuery<String> query = (TypedQuery<String>) em.createNamedQuery("buscarSenhaPeloEmail").setParameter("email", email);
+    public Usuario buscarUsuarioPeloEmail(String email) throws EmailNaoCadastradoException{
+        
+        TypedQuery<Usuario> query = (TypedQuery<Usuario>) em
+                                        .createNamedQuery("usuario.buscarUsuarioPeloEmail")
+                                        .setParameter("email", email);
         try{
             return query.getSingleResult();
         }
@@ -55,7 +58,7 @@ public class UsuarioDAO {
             throw new EmailNaoCadastradoException();
         }
         
-
     }
+
 
 }

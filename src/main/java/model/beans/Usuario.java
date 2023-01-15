@@ -20,8 +20,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NamedQueries({
-    @NamedQuery(name = "buscarSenhaPeloEmail",
-                query = "select senha from usuario where email = :email"    
+    @NamedQuery(name = "usuario.buscarUsuarioPeloEmail",
+                query = "select u from usuario u where u.email = :email"    
     )
 })
 @Entity(name="usuario")
