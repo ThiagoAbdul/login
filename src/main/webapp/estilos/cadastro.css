@@ -1,9 +1,41 @@
 @charset "UTF-8";
 
+@keyframes aparecer {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
 body{width: initial; height: initial; background-attachment: fixed;}
 
-main{position: initial; margin: auto; margin-top: 2em; transform: initial; height: initial; padding-bottom: 4px;}
+main{
+    position: initial; transform: initial; height: initial; 
+    margin: auto; margin-top: 2em; padding-bottom: 4px;
+    transition-duration: .3s; 
+}
 
 input{ width: 100%;}
 
 input[type=button]{margin-left: 0;}
+
+.validar-senha{    
+    font-weight: lighter;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.validar-senha p{text-align: right; animation-name: aparecer; animation-duration: 1s;}
+
+#requisitos-senha{display: none;}
+
+#status-senha{display: none;}
+
+#confirmar-senha{display: none;}
+
+.check{color: green;}
+
+.check::after{content: " \2713";}
+
+.uncheck{color: red;}
+
+.uncheck::after{content: " x"}
+

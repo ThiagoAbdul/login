@@ -5,7 +5,7 @@ export const emailInvalido = (email) => {
     return true
 }
 
-const senhaNaoPossui = (senha, regex) => {
+export const senhaNaoPossui = (senha, regex) => {
     if(senha.match(regex)) {
         return false
     }
