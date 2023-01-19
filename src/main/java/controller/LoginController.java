@@ -25,6 +25,7 @@ public class LoginController extends ServletController{
         dao = new UsuarioDAO();
         try {
             Usuario usuario = dao.buscarUsuarioPeloEmail(email);
+            dao.liberarRecurso();
             PrintWriter out = response.getWriter();
             if(cripto.confirmarSenha(senhaInformada, email, usuario.getSenha())){
                 request.setAttribute("usuario", usuario);

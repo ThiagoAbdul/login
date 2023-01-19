@@ -1,6 +1,0 @@
-model/beans/Usuario.class
-util/Criptografia.class
-controller/CadastroController.class
-model/DAO/UsuarioDAO.class
-exceptions/EmailJaCadastradoException.class
-model/beans/Usuario$UsuarioBuilder.class

@@ -1,5 +1,7 @@
 package model.DAO;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
@@ -60,5 +62,38 @@ public class UsuarioDAO {
         
     }
 
+    public void atualizarUsuario(Usuario usuario){
+        if(usuario.getId() < 1){
+            throw new RuntimeException("Usuário sem identificação");
+        }
+        em.getTransaction();
+        em.merge(usuario);
+        em.getTransaction().commit();
+    }
+
+    public void alterarFotoDePerfil(long id, byte[] bytesDaFoto){
+        Usuario usuario = em.find(Usuario.class, id);
+        usuario.setFotoDePerfil(bytesDaFoto);
+        em.getTransaction().begin();
+        em.persist(usuario);
+        em.getTransaction().commit();
+    }
+
+    public void alterarFotoDePerfil(long id, InputStream streamDaFoto) throws IOException{
+        alterarFotoDePerfil(id, streamDaFoto.readAllBytes());
+    }
+
+    public byte[] buscarBlobDaFotoDePerfil(long id){
+        TypedQuery<byte[]> query = em
+                    .createNamedQuery("usuario.buscarFotoDePerfil", byte[].class)
+                    .setParameter("id", id);
+        try{
+            return query.getSingleResult();
+        }
+        catch(NoResultException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

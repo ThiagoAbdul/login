@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+main{
+    height: 230px;
+}
+
+form{width: 100%; height: 100%;}
+
+#container-imagem{
+    width: 200px; height: 200px; border-radius: 50%;
+    background-color: #aaa;
+    background-size: cover;
+    position: relative; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: .25s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#container-imagem:hover{background-color: #bbb; color: white; ;}
+
+#upload-imagem{display: none;}
