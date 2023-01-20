@@ -6,6 +6,9 @@ export const regex = {
     DOZE_CARACTERES: /.{12,}/,
     EMAIL: /^[a-zA-Z0-9_.]+@[\w]+([.][\w]+)+$/
 }
+
+export const preencheu = (campo) => campo !== null & campo !== ""
+
 export const emailInvalido = (email) => {
     if(email.match(regex['EMAIL'])){
         return false

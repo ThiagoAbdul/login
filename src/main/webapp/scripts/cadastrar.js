@@ -1,29 +1,20 @@
-import { regex, emailInvalido, senhaPossui, isSenhaFraca } from "./validar.js"
-
-const getElemento = (id) => document.querySelector(id)
-
-const btnCadastrar = document.querySelector("#btn-cadastrar")
-const divRequisitosSenha = document.querySelector("#requisitos-senha")
-const divStatusSenha = document.querySelector("#status-senha")
-const paragrafoStatusSenha = document.querySelector("#status-senha p")
+import { regex, preencheu, emailInvalido, senhaPossui, isSenhaFraca } from "./validar.js"
 
 const getEmail = () => cadastroEmail.value
 const getSenha = () => cadastroSenha.value
 const getConfirmarSenha = () => confirmarSenha.value
 
 const confirmarRequisito = (paragrafoRequisito) => {
-    const classesDoParagrafo = paragrafoRequisito.classList
-    if(classesDoParagrafo.contains('check') == false){
-        classesDoParagrafo.add('check')
-        classesDoParagrafo.remove('uncheck')
+    if(paragrafoRequisito.classList.contains('check') === false){
+        paragrafoRequisito.classList.add('check')
+        paragrafoRequisito.classList.remove('uncheck')
     }
 }
 
 const negarRequisito = (paragrafoRequisito) => {
-    const classesDoParagrafo = paragrafoRequisito.classList
-    if(classesDoParagrafo.contains('check')){
-        classesDoParagrafo.add('uncheck')
-        classesDoParagrafo.remove('check')
+    if(paragrafoRequisito.classList.contains('check')){
+        paragrafoRequisito.classList.add('uncheck')
+        paragrafoRequisito.classList.remove('check')
     }
 }
 
@@ -40,40 +31,56 @@ const marcarRequisito = (requisitoAtendido, paragrafoRequisito) => {
 const verificarSenhaFactory = (regex) => () => senhaPossui(getSenha(), regex)
 
 const mostrarRequisitosDaSenha = () => {
-    divRequisitosSenha.style.display = "block"
-    divStatusSenha.style.display = "none"
+    requisitosSenha.style.display = "block"
+    statusSenha.style.display = "none"
 }
 
 const resumirStatusDaSenha = () => {
-    divStatusSenha.style.display = "block"
-    divRequisitosSenha.style.display = "none"
+    statusSenha.style.display = "block"
+    requisitosSenha.style.display = "none"
 }
+
+const isSenhasDiferentes = () => getSenha() !== getConfirmarSenha()
 
 cadastroSenha.addEventListener('focus', mostrarRequisitosDaSenha)
 
 cadastroSenha.addEventListener('keyup', () => {
-    marcarRequisito(verificarSenhaFactory(regex['CARACTER_MINUSCULO']), 
-                        getElemento('#caracter-minusculo'))
-    marcarRequisito(verificarSenhaFactory(regex['CARACTER_MAIUSCULO']), 
-                        getElemento('#caracter-maiusculo'))
-    marcarRequisito(verificarSenhaFactory(regex['CARACTER_ESPECIAL']), 
-                        getElemento('#caracter-especial'))
-    marcarRequisito(verificarSenhaFactory(regex['CARACTER_NUMERICO']), 
-                        getElemento('#caracter-numerico'))
-    marcarRequisito(verificarSenhaFactory(regex['DOZE_CARACTERES']), 
-                        getElemento('#doze-caracteres'))                    
+    marcarRequisito(verificarSenhaFactory(regex['CARACTER_MINUSCULO']), caracterMinusculo)
+    marcarRequisito(verificarSenhaFactory(regex['CARACTER_MAIUSCULO']), caracterMaiusculo)
+    marcarRequisito(verificarSenhaFactory(regex['CARACTER_ESPECIAL']), caracterEspecial)
+    marcarRequisito(verificarSenhaFactory(regex['CARACTER_NUMERICO']), caracterNumerico)
+    marcarRequisito(verificarSenhaFactory(regex['DOZE_CARACTERES']), dozeCaracteres)                    
 })
 
 cadastroSenha.addEventListener('blur', () => {
     if(isSenhaFraca(getSenha())){
-        paragrafoStatusSenha.innerHTML = "Senha não atende os requisítos"
-        negarRequisito(paragrafoStatusSenha)
+        statusSenha.innerHTML = "Senha não atende os requisítos"
+        negarRequisito(statusSenha)
     }
     else{
-        paragrafoStatusSenha.innerHTML = "Senha atende os requisítos"
-        confirmarRequisito(paragrafoStatusSenha)
+        statusSenha.innerHTML = "Senha atende os requisítos"
+        confirmarRequisito(statusSenha)
     }
     resumirStatusDaSenha()
+})
+
+confirmarSenha.addEventListener('focus', () => mensagemSenhaConfirmada.style.display = "block")
+
+confirmarSenha.addEventListener('keyup', () => {
+    if(isSenhasDiferentes()){
+        mensagemSenhaConfirmada.innerHTML = "Senhas divergentes."
+        negarRequisito(mensagemSenhaConfirmada)
+    }
+    else{
+        if(preencheu(getSenha())){
+            mensagemSenhaConfirmada.innerHTML = "Senhas conferem."
+            confirmarRequisito(mensagemSenhaConfirmada)
+        }
+    }
+})
+
+confirmarSenha.addEventListener('blur', () => {
+    if(!preencheu(getConfirmarSenha())) mensagemSenhaConfirmada.style.display = "none"
 })
 
 btnCadastrar.addEventListener('click', () => {
@@ -83,7 +90,7 @@ btnCadastrar.addEventListener('click', () => {
     else if(isSenhaFraca(getSenha())){
         alert('Senha não atende os requisitos.')
     }
-    else if(getSenha() !== getConfirmarSenha()){
+    else if(isSenhasDiferentes()){
         alert('Senhas não coincidem.')
     }
     else{

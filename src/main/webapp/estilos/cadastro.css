@@ -25,11 +25,11 @@ input[type=button]{margin-left: 0;}
 
 .validar-senha p{text-align: right; animation-name: aparecer; animation-duration: 1s;}
 
-#requisitos-senha{display: none;}
+#requisitosSenha{display: none;}
 
-#status-senha{display: none;}
+#statusSenha{display: none;}
 
-#confirmar-senha{display: none;}
+#mensagemSenhaConfirmada{display: none;}
 
 .check{color: green;}
 
