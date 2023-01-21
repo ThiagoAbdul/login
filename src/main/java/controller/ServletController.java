@@ -3,16 +3,29 @@ package controller;
 import javax.servlet.http.HttpServlet;
 
 import model.DAO.UsuarioDAO;
-import util.Criptografia;
+import util.DigestorDeSenha;
+import util.Hash;
+
 
 public abstract class ServletController extends HttpServlet{
 
-    protected Criptografia cripto;
+    protected Hash hash;
     protected UsuarioDAO dao;
 
     public ServletController(){
-        cripto = new Criptografia();
-        dao = new UsuarioDAO();
+        try{
+            hash = new DigestorDeSenha();
+            dao = new UsuarioDAO();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    protected void fecharConexaoComBanco(){
+        if(dao != null){
+            dao.liberarRecurso();
+        }
     }
     
 }

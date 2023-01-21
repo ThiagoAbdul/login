@@ -1,9 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
@@ -11,30 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import exceptions.EmailNaoCadastradoException;
-import model.DAO.UsuarioDAO;
+
 import model.beans.Usuario;
 
+import util.CredencialUsuario;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends ServletController{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        String email = request.getParameter("email");
-        String senhaInformada = request.getParameter("senha");
-        dao = new UsuarioDAO();
         try {
-            Usuario usuario = dao.buscarUsuarioPeloEmail(email);
-            dao.liberarRecurso();
-            PrintWriter out = response.getWriter();
-            if(cripto.confirmarSenha(senhaInformada, email, usuario.getSenha())){
-                request.setAttribute("usuario", usuario);
-                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-                rd.forward(request, response);
-            }
-            else{
-                out.println("Incorreto");
-            }
+            logar(request, response);
         } catch (EmailNaoCadastradoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -45,7 +32,30 @@ public class LoginController extends ServletController{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            fecharConexaoComBanco();
+        }
     }
 
+    private void logar(HttpServletRequest request, HttpServletResponse response) 
+                                            throws EmailNaoCadastradoException, 
+                                            IOException, ServletException{
+        
+        CredencialUsuario credencial = CredencialUsuario.builder()
+                                .email(request.getParameter("email")) 
+                                .senha(request.getParameter("senha"))
+                                .hash(this.hash)
+                                .build();
+        Usuario usuarioBuscado = dao.buscarUsuarioPeloEmail(credencial.getEmail());
+        if(credencial.confereHashDeSenha(usuarioBuscado.getSenha())){
+            request.setAttribute("usuario", usuarioBuscado);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        else{
+            System.out.println("Não tá batendo");
+        }
+    }
 }

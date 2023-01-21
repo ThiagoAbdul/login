@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import exceptions.EmailJaCadastradoException;
 import model.DAO.UsuarioDAO;
 import model.beans.Usuario;
+import util.CredencialUsuario;
 
 @WebServlet(urlPatterns = {"/cadastro"})
 public class CadastroController extends ServletController {
@@ -28,24 +29,18 @@ public class CadastroController extends ServletController {
         }
         catch(Exception e){
             e.printStackTrace();
+        }
+        finally{
+            fecharConexaoComBanco();
         } 
     }
 
-    private void cadastrar(HttpServletRequest request) throws EmailJaCadastradoException, IOException{
-        try {
+    private void cadastrar(HttpServletRequest request) throws EmailJaCadastradoException, IOException, SQLException{
             Usuario usuario = criarUsuario(request);
-            dao = new UsuarioDAO();
-            if(emailJaCadastrado(usuario.getEmail(), dao)){
+            if(emailJaCadastrado(usuario.getEmail())){
                 throw new EmailJaCadastradoException();
             }  
             dao.salvar(usuario);
-            dao.liberarRecurso();
-            
-        }
-        catch(SQLException e){
-            if(dao != null) dao.liberarRecurso();
-            e.printStackTrace();
-        }
     }
 
     private Usuario criarUsuario(HttpServletRequest request) throws IOException{
@@ -63,10 +58,15 @@ public class CadastroController extends ServletController {
     }
 
     private void criptografarSenha(Usuario usuario) throws IOException{
-        usuario.setSenha(cripto.gerarHash(usuario.getSenha(), usuario.getEmail()));
+        CredencialUsuario credencial = CredencialUsuario.builder()
+                                .email(usuario.getEmail())
+                                .senha(usuario.getSenha())
+                                .hash(this.hash)
+                                .build();
+        usuario.setSenha(credencial.gerarHashDeSenha());
     }
 
-    private boolean emailJaCadastrado(String email, UsuarioDAO dao){
-        return dao.encontrouEmail(email);
+    private boolean emailJaCadastrado(String email){
+        return this.dao.encontrouEmail(email);
     }
 }

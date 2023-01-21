@@ -41,11 +41,24 @@
             <div class="campos">
                 <input id="cadastroSenha" name="senha" type="password" placeholder="Senha">
             </div>
+            <div id="requisitosSenha" class="validar-senha">
+                <p id="caracterMinusculo" class="uncheck">Letra minúscula</p>
+                <p id="caracterMaiusculo" class="uncheck">Letra maiúscula</p>
+                <p id="caracterEspecial" class="uncheck">Caracter especial</p>
+                <p id="caracterNumerico" class="uncheck">Número</p>
+                <p id="dozeCaracteres" class="uncheck">12 ou mais caracteres</p>
+            </div>
+            <div class="validar-senha">
+                <p id="statusSenha" class="uncheck"></p>
+            </div>
             <div class="campos">
                 <input id="confirmarSenha" type="password" placeholder="Confirme sua senha">
             </div>
+            <div class="validar-senha">
+                <p id="mensagemSenhaConfirmada" class="uncheck"></p>
+            </div>
             <div class="campos">
-                <input id="btn-cadastrar" class="button-a" type="button" value="Cadastrar">
+                <input id="btnCadastrar" class="button-a" type="button" value="Cadastrar">
             </div>
             <div class="campos">
                 <a href="login.html" rel="_self"><input class="button-b" type="button" value="Voltar"></a>

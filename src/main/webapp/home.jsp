@@ -29,6 +29,7 @@
                     <span id="texto">Adicione sua foto</span>
                 </div>
             </label>
+            <input type="hidden" name="idUsuario" value=<%=usuario.getId()%>>
         </form>
     </main>
     <script src="scripts/home.js"></script>

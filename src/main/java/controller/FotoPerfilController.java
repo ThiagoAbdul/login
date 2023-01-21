@@ -15,13 +15,24 @@ public class FotoPerfilController extends ServletController{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        InputStream streamPart;
+        InputStream streamPart = null;
         try {
             streamPart = request.getPart("imagem").getInputStream();
-            dao.alterarFotoDePerfil(5l, streamPart);
+            long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+            dao.alterarFotoDePerfil(idUsuario, streamPart);
             streamPart.close();
         } catch (IOException | ServletException e) {
             e.printStackTrace();
+            if(streamPart != null)
+                try {
+                    streamPart.close();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+        }
+        finally{
+            fecharConexaoComBanco();
         }
     }
     
