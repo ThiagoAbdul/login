@@ -1,19 +1,37 @@
 const uploadImagem = document.querySelector("#upload-imagem")
 const texto = document.querySelector("#texto")
+ 
+const mostrarBotes = () => {
+    fundo.style.backgroundColor = 'rgba(0, 0, 0, 0.25)'
+    document.querySelector("main").classList.add('fundo-foto')
+    document.querySelectorAll(".botao").forEach(e => {
+        e.style.display = 'block'
+    })
+}
+
+const ocultarBotoes = () => {
+    fundo.style.backgroundColor = 'inherit'
+    document.querySelector("main").classList.remove('fundo-foto')
+    document.querySelectorAll(".botao").forEach(e => {
+        e.style.display = 'none'
+    })
+}
+
+btnDescartarFoto.addEventListener('click', () => {
+    texto.style.display = 'inline'
+    document.querySelector("#container-imagem").style.backgroundImage = 'initial'
+    ocultarBotoes()
+})
+
+btnAtualizarFoto.addEventListener('click', () => formFoto.submit())
 
 const getArquivoImagem = (input) => {
     const imagemCarregada = input.files[0]
     const file = new FileReader()
     file.addEventListener('load', () => {
         document.querySelector("#container-imagem").style.backgroundImage = `url(${file.result})`
-        texto.style.display = "none"
-        if(confirm("Deseja atualizar sua foto de perfil?")){
-            formFoto.submit()
-        }
-        else{
-            document.querySelector("#container-imagem").style.backgroundImage = 'none'
-            texto.style.display = 'inline'
-        }
+        texto.style.display = 'none'
+        mostrarBotes()
     })
     file.readAsDataURL(imagemCarregada)
 }

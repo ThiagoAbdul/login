@@ -18,20 +18,26 @@
     <%
         Usuario usuario = (Usuario)request.getAttribute("usuario");
     %>
-    <header>
-        <h1>Olá, <%=usuario.getNome()%></h1>
-    </header>
-    <main>
-        <form name="formFoto" action="trocarFoto" method="post" enctype="multipart/form-data">
-            <label for="upload-imagem">
-                <div id="container-imagem" tabindex="0">
-                    <input id="upload-imagem" name="imagem" type="file" accept="image/*">
-                    <span id="texto">Adicione sua foto</span>
+    <div id="fundo">
+        <header>
+            <h1>Olá, <%=usuario.getNome()%></h1>
+        </header>
+        <main>
+            <form name="formFoto" action="trocarFoto" method="post" enctype="multipart/form-data">
+                <label for="upload-imagem">
+                    <div id="container-imagem" tabindex="0">
+                        <input id="upload-imagem" name="imagem" type="file" accept="image/*">
+                        <span id="texto">Adicione sua foto</span>
+                    </div>
+                </label>
+                <div id="container-botoes">
+                    <input id="btnAtualizarFoto" class="button-a botao" type="button" value="Atualizar foto de perfil?">
+                    <input id="btnDescartarFoto" class="button-b botao" type="button" value="Descartar">
                 </div>
-            </label>
-            <input type="hidden" name="idUsuario" value=<%=usuario.getId()%>>
-        </form>
-    </main>
+                <input type="hidden" name="idUsuario" value=<%=usuario.getId()%>>
+            </form>
+        </main>
+    </div>
     <script src="scripts/home.js"></script>
 </body>
 </html>
