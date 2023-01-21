@@ -1,5 +1,6 @@
-import { regex, preencheu, emailInvalido, senhaPossui, isSenhaFraca } from "./validar.js"
+import { regex, preencheu, telefoneInvalido, emailInvalido, senhaPossui, senhaFraca } from "./validar.js"
 
+const getTelefone = () => telefone.value
 const getEmail = () => cadastroEmail.value
 const getSenha = () => cadastroSenha.value
 const getConfirmarSenha = () => confirmarSenha.value
@@ -40,7 +41,7 @@ const resumirStatusDaSenha = () => {
     requisitosSenha.style.display = "none"
 }
 
-const isSenhasDiferentes = () => getSenha() !== getConfirmarSenha()
+const senhasDiferentes = () => getSenha() !== getConfirmarSenha()
 
 cadastroSenha.addEventListener('focus', mostrarRequisitosDaSenha)
 
@@ -53,7 +54,7 @@ cadastroSenha.addEventListener('keyup', () => {
 })
 
 cadastroSenha.addEventListener('blur', () => {
-    if(isSenhaFraca(getSenha())){
+    if(senhaFraca(getSenha())){
         statusSenha.innerHTML = "Senha não atende os requisítos"
         negarRequisito(statusSenha)
     }
@@ -67,7 +68,7 @@ cadastroSenha.addEventListener('blur', () => {
 confirmarSenha.addEventListener('focus', () => mensagemSenhaConfirmada.style.display = "block")
 
 confirmarSenha.addEventListener('keyup', () => {
-    if(isSenhasDiferentes()){
+    if(senhasDiferentes()){
         mensagemSenhaConfirmada.innerHTML = "Senhas divergentes."
         negarRequisito(mensagemSenhaConfirmada)
     }
@@ -84,14 +85,21 @@ confirmarSenha.addEventListener('blur', () => {
 })
 
 btnCadastrar.addEventListener('click', () => {
-    if(emailInvalido(getEmail())){
+    if(telefoneInvalido(getTelefone())){
+        alert('Favor, preencher o telefone corretamente.')
+        telefone.focus()
+    }
+    else if(emailInvalido(getEmail())){
         alert('Favor, preencher o e-mail corretamente.')
+        cadastroEmail.focus()
     }
-    else if(isSenhaFraca(getSenha())){
+    else if(senhaFraca(getSenha())){
         alert('Senha não atende os requisitos.')
+        cadastroSenha.focus()
     }
-    else if(isSenhasDiferentes()){
+    else if(senhasDiferentes()){
         alert('Senhas não coincidem.')
+        confirmarSenha.focus()
     }
     else{
         formCadastro.submit()

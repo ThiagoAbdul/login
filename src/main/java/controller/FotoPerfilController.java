@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DAO.UsuarioDAO;
+
 @MultipartConfig
 @WebServlet(urlPatterns = {"/trocarFoto"})
 public class FotoPerfilController extends ServletController{
@@ -16,9 +18,11 @@ public class FotoPerfilController extends ServletController{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
         InputStream streamPart = null;
+        UsuarioDAO dao = null;
         try {
             streamPart = request.getPart("imagem").getInputStream();
             long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+            dao = new UsuarioDAO();
             dao.alterarFotoDePerfil(idUsuario, streamPart);
             streamPart.close();
         } catch (IOException | ServletException e) {
@@ -32,7 +36,7 @@ public class FotoPerfilController extends ServletController{
                 }
         }
         finally{
-            fecharConexaoComBanco();
+            fecharConexaoComBanco(dao);
         }
     }
     
