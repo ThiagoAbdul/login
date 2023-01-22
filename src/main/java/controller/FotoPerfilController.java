@@ -1,43 +1,23 @@
 package controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.DAO.UsuarioDAO;
+import model.DAO.FotoPerfilDAO;
 
-@MultipartConfig
-@WebServlet(urlPatterns = {"/trocarFoto"})
+@WebServlet(urlPatterns = {"/pegarFoto"})
 public class FotoPerfilController extends ServletController{
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        InputStream streamPart = null;
-        UsuarioDAO dao = null;
-        try {
-            streamPart = request.getPart("imagem").getInputStream();
-            long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
-            dao = new UsuarioDAO();
-            dao.alterarFotoDePerfil(idUsuario, streamPart);
-            streamPart.close();
-        } catch (IOException | ServletException e) {
-            e.printStackTrace();
-            if(streamPart != null)
-                try {
-                    streamPart.close();
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-        }
-        finally{
-            fecharConexaoComBanco(dao);
-        }
-    }
+    private FotoPerfilDAO fotoPerfilDAO;
     
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response){
+        
+    }
+
+    private void enviarFotoPerfil(HttpServletRequest request, HttpServletRequest response){
+        
+    }
+
 }

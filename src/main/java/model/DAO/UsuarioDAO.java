@@ -1,44 +1,20 @@
 package model.DAO;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import exceptions.EmailNaoCadastradoException;
 import model.beans.Usuario;
 
-public class UsuarioDAO {
-    
-    private EntityManagerFactory emf;
-    private EntityManager em;
-
-    public UsuarioDAO(){
-        emf = Persistence.createEntityManagerFactory("dblogin");
-        em = emf.createEntityManager();
-    }
+public class UsuarioDAO extends DAO{
 
     public void salvar(Usuario usuario) throws SQLException{
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
-    }
-
-    public void liberarRecurso(){
-        if(em != null){
-            em.close();
-            em = null;
-        }
-        if(emf != null){
-            emf.close();
-            emf = null;
-        }
     }
 
     public boolean encontrouEmail(String email){
@@ -69,31 +45,6 @@ public class UsuarioDAO {
         em.getTransaction();
         em.merge(usuario);
         em.getTransaction().commit();
-    }
-
-    public void alterarFotoDePerfil(long id, byte[] bytesDaFoto){
-        Usuario usuario = em.find(Usuario.class, id);
-        usuario.setFotoDePerfil(bytesDaFoto);
-        em.getTransaction().begin();
-        em.persist(usuario);
-        em.getTransaction().commit();
-    }
-
-    public void alterarFotoDePerfil(long id, InputStream streamDaFoto) throws IOException{
-        alterarFotoDePerfil(id, streamDaFoto.readAllBytes());
-    }
-
-    public byte[] buscarBlobDaFotoDePerfil(long id){
-        TypedQuery<byte[]> query = em
-                    .createNamedQuery("usuario.buscarFotoDePerfil", byte[].class)
-                    .setParameter("id", id);
-        try{
-            return query.getSingleResult();
-        }
-        catch(NoResultException e){
-            e.printStackTrace();
-            return null;
-        }
     }
 
 }

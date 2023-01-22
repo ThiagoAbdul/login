@@ -17,10 +17,10 @@ public class CadastroController extends ServletController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        UsuarioDAO dao = null;
+
         try {
-            dao = new UsuarioDAO();
-            cadastrar(request, dao);
+            usuarioDAO = new UsuarioDAO();
+            cadastrar(request);
             response.sendRedirect("login.html");
         } 
         catch (IOException e) {
@@ -33,16 +33,16 @@ public class CadastroController extends ServletController {
             e.printStackTrace();
         }
         finally{
-            fecharConexaoComBanco(dao);
+            fecharConexaoComBanco();
         } 
     }
 
-    private void cadastrar(HttpServletRequest request, UsuarioDAO dao) throws EmailJaCadastradoException, IOException, SQLException{
+    private void cadastrar(HttpServletRequest request) throws EmailJaCadastradoException, IOException, SQLException{
             Usuario usuario = criarUsuario(request);
-            if(emailJaCadastrado(usuario.getEmail(), dao)){
+            if(emailJaCadastrado(usuario.getEmail())){
                 throw new EmailJaCadastradoException();
             }  
-            dao.salvar(usuario);
+            usuarioDAO.salvar(usuario);
     }
 
     private Usuario criarUsuario(HttpServletRequest request) throws IOException{
@@ -68,7 +68,7 @@ public class CadastroController extends ServletController {
         usuario.setSenha(credencial.gerarHashDeSenha());
     }
 
-    private boolean emailJaCadastrado(String email, UsuarioDAO dao){
-        return dao.encontrouEmail(email);
+    private boolean emailJaCadastrado(String email){
+        return usuarioDAO.encontrouEmail(email);
     }
 }

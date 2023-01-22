@@ -19,10 +19,9 @@ public class LoginController extends ServletController{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        UsuarioDAO dao = null;
         try {
-            dao = new UsuarioDAO();
-            logar(request, response, dao);
+            usuarioDAO = new UsuarioDAO();
+            logar(request, response);
         } catch (EmailNaoCadastradoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -37,16 +36,16 @@ public class LoginController extends ServletController{
             e.printStackTrace();
         }
         finally{
-            fecharConexaoComBanco(dao);
+            fecharConexaoComBanco();
         }
     }
 
-    private void logar(HttpServletRequest request, HttpServletResponse response, UsuarioDAO dao) 
+    private void logar(HttpServletRequest request, HttpServletResponse response) 
                                             throws EmailNaoCadastradoException, 
                                             IOException, ServletException{
         
         CredencialUsuario credencial = credencialDaRequest(request);
-        Usuario usuarioBuscado = dao.buscarUsuarioPeloEmail(credencial.getEmail());
+        Usuario usuarioBuscado = usuarioDAO.buscarUsuarioPeloEmail(credencial.getEmail());
         if(credencial.confereHashDeSenha(usuarioBuscado.getSenha())){
             request.setAttribute("usuario", usuarioBuscado);
             request.getRequestDispatcher("home.jsp").forward(request, response);

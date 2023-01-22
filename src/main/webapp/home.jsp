@@ -27,7 +27,9 @@
                 <label for="upload-imagem">
                     <div id="container-imagem" tabindex="0">
                         <input id="upload-imagem" name="imagem" type="file" accept="image/*">
-                        <span id="texto">Adicione sua foto</span>
+                        
+                                <span id="texto">Adicione sua foto</span>
+                        
                     </div>
                 </label>
                 <div id="container-botoes">

@@ -10,14 +10,15 @@ import util.Hash;
 public abstract class ServletController extends HttpServlet{
 
     protected Hash hash;
+    protected UsuarioDAO usuarioDAO;
 
     public ServletController(){
         hash = new DigestorDeSenha();
     }
 
-    protected void fecharConexaoComBanco(UsuarioDAO dao){
-        if(dao != null){
-            dao.liberarRecurso();
+    protected void fecharConexaoComBanco(){
+        if(usuarioDAO != null){
+            usuarioDAO.liberarRecurso();
         }
     }
     

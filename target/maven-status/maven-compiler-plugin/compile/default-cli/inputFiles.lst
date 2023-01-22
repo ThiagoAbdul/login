@@ -1,9 +1,0 @@
-/home/abdul/java/projects-workspace/login/src/main/java/controller/ServletController.java
-/home/abdul/java/projects-workspace/login/src/main/java/model/beans/Usuario.java
-/home/abdul/java/projects-workspace/login/src/main/java/controller/CadastroController.java
-/home/abdul/java/projects-workspace/login/src/main/java/exceptions/EmailJaCadastradoException.java
-/home/abdul/java/projects-workspace/login/src/main/java/controller/FotoPerfilController.java
-/home/abdul/java/projects-workspace/login/src/main/java/exceptions/EmailNaoCadastradoException.java
-/home/abdul/java/projects-workspace/login/src/main/java/model/DAO/UsuarioDAO.java
-/home/abdul/java/projects-workspace/login/src/main/java/util/Criptografia.java
-/home/abdul/java/projects-workspace/login/src/main/java/controller/LoginController.java

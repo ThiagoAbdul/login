@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,9 +22,6 @@ import lombok.ToString;
 @NamedQueries({
     @NamedQuery(name = "usuario.buscarUsuarioPeloEmail",
                 query = "select u from usuario u where u.email = :email"    
-    ),
-    @NamedQuery(name = "usuario.buscarFotoDePerfil",
-                query = "select fotoDePerfil from usuario u where id = :id"
     )
 })
 @Entity(name="usuario")
@@ -46,10 +42,6 @@ public class Usuario implements Serializable{
     @Column(name = "hash_senha")
     @Setter
     private String senha;
-    @Lob
-    @Column(name = "foto_perfil")
-    @Setter
-    private byte[] fotoDePerfil;
 
     public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String senha) {
         this.nome = nome;
@@ -59,5 +51,6 @@ public class Usuario implements Serializable{
         this.email = email;
         this.senha = senha;
     }
+
 
 }
