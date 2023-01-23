@@ -4,8 +4,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import lombok.Getter;
+
 public abstract class DAO {
     protected EntityManagerFactory emf;
+    @Getter
     protected EntityManager em;
 
     public DAO(){

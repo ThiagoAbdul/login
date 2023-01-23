@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.DAO.FotoPerfilDAO;
+import model.DAO.UsuarioDAO;
+import model.beans.Usuario;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {"/trocarFoto"})
@@ -25,6 +27,10 @@ public class AlterarFotoPerfilController extends ServletController{
             long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
             fotoPerfilDAO = new FotoPerfilDAO();
             fotoPerfilDAO.alterarFotoDePerfil(idUsuario, streamPart);
+            usuarioDAO = new UsuarioDAO();
+            Usuario usuario = usuarioDAO.getEm().find(Usuario.class, idUsuario);
+            request.setAttribute("usuario", usuario);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
 
         } catch (IOException | ServletException e) {
             e.printStackTrace();
