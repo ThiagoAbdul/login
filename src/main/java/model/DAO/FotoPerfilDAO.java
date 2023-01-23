@@ -33,7 +33,7 @@ public class FotoPerfilDAO extends DAO{
     public byte[] buscarBytesDaFoto(long id){
         TypedQuery<byte[]> query = em
                     .createNamedQuery("fotoPerfil.buscarFotoDePerfil", byte[].class)
-                    .setParameter("idUsuario", id);
+                    .setParameter("id", id);
         try{
             return query.getSingleResult();
         }
