@@ -21,7 +21,7 @@ public class CadastroController extends ServletController {
         try {
             usuarioDAO = new UsuarioDAO();
             cadastrar(request);
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.jsp");
         } 
         catch (IOException e) {
             e.printStackTrace();

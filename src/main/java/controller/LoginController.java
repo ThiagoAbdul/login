@@ -47,8 +47,13 @@ public class LoginController extends ServletController{
         CredencialUsuario credencial = credencialDaRequest(request);
         Usuario usuarioBuscado = usuarioDAO.buscarUsuarioPeloEmail(credencial.getEmail());
         if(credencial.confereHashDeSenha(usuarioBuscado.getSenha())){
+            response.setStatus(200);
             request.setAttribute("usuario", usuarioBuscado);
             request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        else{
+            response.setStatus(401);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
        
     }
