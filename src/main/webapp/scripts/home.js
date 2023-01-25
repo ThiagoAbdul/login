@@ -10,7 +10,7 @@ const mostrarBotes = () => {
 }
 
 const ocultarBotoes = () => {
-    fundo.style.backgroundColor = 'inherit'
+    fundo.style.backgroundColor = 'rgba(0, 0, 0, 0)'
     document.querySelector("main").classList.remove('fundo-foto')
     document.querySelectorAll(".botao").forEach(e => {
         e.style.display = 'none'
