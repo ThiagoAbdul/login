@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @NamedQueries({
     @NamedQuery(name = "usuario.buscarUsuarioPeloEmail",
@@ -44,6 +45,7 @@ public class Usuario implements Serializable{
     private String senha;
     @Column(name = "tem_foto")
     @Builder.Default
+    @Accessors(fluent = true)
     private boolean temFoto = false;
 
     public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String senha) {
@@ -53,6 +55,7 @@ public class Usuario implements Serializable{
         this.numeroEndereco = numeroEndereco;
         this.email = email;
         this.senha = senha;
+        
     }
 
 

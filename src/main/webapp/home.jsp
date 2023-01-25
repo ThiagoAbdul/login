@@ -16,12 +16,15 @@
     <link rel="stylesheet" href="estilos/home.css">
     <%
         Usuario usuario = (Usuario)request.getAttribute("usuario");
+        if(usuario.temFoto()){
     %>
     <style>
-        #container-imagem{
-            background-image: url('pegarFoto?id=<%=usuario.getId()%>');
-        }
+        #container-imagem{background-image: url('pegarFoto?id=<%=usuario.getId()%>')}
+        #texto{display: none}
     </style>
+    <%
+        }
+    %>
     <title>Home</title>
 </head>
 <body>
@@ -35,7 +38,7 @@
                     <div id="container-imagem" tabindex="0">
                         <input id="upload-imagem" name="imagem" type="file" accept="image/*">
                         
-                                <span id="texto">Adicione sua foto</span>
+                            <span id="texto">Altere sua sua foto</span>
                         
                     </div>
                 </label>
@@ -50,6 +53,21 @@
             </form>
         </main>
     </div>
+    <%
+        if(usuario.temFoto()){
+    %>
+    <script>
+        document.querySelector("#container-imagem").addEventListener('mouseenter', () => {
+        texto.style.display = 'inline'
+        })
+
+        document.querySelector("#container-imagem").addEventListener('mouseleave', () => {
+            texto.style.display = 'none'
+        })
+    </script>
+    <%
+        }
+    %>
     <script src="scripts/home.js"></script>
 </body>
 </html>

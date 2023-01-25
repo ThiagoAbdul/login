@@ -40,3 +40,6 @@ const getArquivoImagem = (input) => {
 uploadImagem.addEventListener('change', e => {
     getArquivoImagem(e.target)
 })
+
+
+
