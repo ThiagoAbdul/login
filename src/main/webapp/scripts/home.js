@@ -18,8 +18,8 @@ const ocultarBotoes = () => {
 }
 
 btnDescartarFoto.addEventListener('click', () => {
-    texto.style.display = 'inline'
-    document.querySelector("#container-imagem").style.backgroundImage = 'initial'
+    document.querySelector("#container-imagem").style.display = 'flex'
+    containerImagemCarregada.style.display = 'none'
     ocultarBotoes()
 })
 
@@ -29,8 +29,9 @@ const getArquivoImagem = (input) => {
     const imagemCarregada = input.files[0]
     const file = new FileReader()
     file.addEventListener('load', () => {
-        document.querySelector("#container-imagem").style.backgroundImage = `url(${file.result})`
-        texto.style.display = 'none'
+        containerImagemCarregada.style.backgroundImage = `url(${file.result})`
+        document.querySelector("#container-imagem").style.display = 'none'
+        containerImagemCarregada.style.display = 'flex'
         mostrarBotes()
     })
     file.readAsDataURL(imagemCarregada)

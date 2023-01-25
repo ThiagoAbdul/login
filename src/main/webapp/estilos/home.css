@@ -11,7 +11,7 @@ main{
 
 form{width: 100%; height: 100%;}
 
-#container-imagem{
+#container-imagem, #containerImagemCarregada{
     width: 200px; height: 200px; border-radius: 50%;
     background-color: #aaa;
     background-size: cover;
@@ -23,6 +23,8 @@ form{width: 100%; height: 100%;}
     justify-content: center;
     text-align: center;
 }
+
+#containerImagemCarregada{display: none;}
 
 #container-imagem:hover{background-color: #bbb; color: white;}
 
@@ -41,6 +43,6 @@ form{width: 100%; height: 100%;}
 .fundo-foto{
     background-color: #1d1d1d;
     width: 100%;
-    height: 400px;
+    height: 450px;
 }
 

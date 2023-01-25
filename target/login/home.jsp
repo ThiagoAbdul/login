@@ -39,6 +39,9 @@
                         
                     </div>
                 </label>
+                <div id="containerImagemCarregada">
+                    <!---Void-->
+                </div>
                 <div id="container-botoes">
                     <input id="btnAtualizarFoto" class="button-a botao" type="button" value="Atualizar foto de perfil?">
                     <input id="btnDescartarFoto" class="button-b botao" type="button" value="Descartar">
