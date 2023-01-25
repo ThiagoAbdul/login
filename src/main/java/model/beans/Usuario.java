@@ -42,6 +42,9 @@ public class Usuario implements Serializable{
     @Column(name = "hash_senha")
     @Setter
     private String senha;
+    @Column(name = "tem_foto")
+    @Builder.Default
+    private boolean temFoto = false;
 
     public Usuario(String nome, String telefone, String cep, short numeroEndereco, String email, String senha) {
         this.nome = nome;

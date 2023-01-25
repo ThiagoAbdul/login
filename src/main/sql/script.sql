@@ -13,3 +13,13 @@ create table usuario(
     email varchar(50) not null unique,
     hash_senha char(64) not null
 ) engine innodb;
+
+delimiter $$
+create trigger tr_tem_foto after insert on foto_perfil
+for each row
+    begin
+        update usuario
+        set tem_foto = 1
+        where id_usuario = new.id_usuario;
+    end $$
+delimiter ;
