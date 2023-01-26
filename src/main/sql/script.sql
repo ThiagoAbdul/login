@@ -1,18 +1,30 @@
-create database if not exists login
-default charset utf8mb4
-default collate utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS login
+DEFAULT CHARSET utf8mb4
+DEFAULT COLLATE utf8mb4_general_ci;
 
-use login;
+USE login;
 
-create table usuario(
-    id_usuario int unsigned primary key auto_increment,
-    nome varchar(50) not null,
-    telefone char(11),
-    cep char(8) not null,
-    numero_endereco smallint unsigned not null,
-    email varchar(50) not null unique,
-    hash_senha char(64) not null
-) engine innodb;
+CREATE TABLE `usuario` (
+  `id_usuario` int unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `telefone` char(11),
+  `cep` char(8) NOT NULL,
+  `numero_endereco` smallint unsigned NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `hash_senha` char(128) NOT NULL,
+  `tem_foto` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `email` (`email`),
+  KEY `index_email` (`email`(10))
+) ENGINE=InnoDB;
+
+CREATE TABLE `foto_perfil` (
+  `id_usuario` int unsigned NOT NULL,
+  `foto` mediumblob,
+  PRIMARY KEY (`id_usuario`),
+  CONSTRAINT `fk_usuario_foto_perfil` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
+) ENGINE=InnoDB;
+
 
 delimiter $$
 create trigger tr_tem_foto after insert on foto_perfil
