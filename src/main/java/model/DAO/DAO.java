@@ -4,11 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import lombok.Getter;
-
-public abstract class DAO {
+public abstract class DAO<T> {
     protected EntityManagerFactory emf;
-    @Getter
     protected EntityManager em;
 
     public DAO(){
@@ -27,5 +24,7 @@ public abstract class DAO {
             emf = null;
         }
     }
+
+    public abstract T buscar(Object primaryKey);
 
 }

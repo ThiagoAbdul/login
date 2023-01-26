@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.rmi.ServerException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,21 +23,26 @@ public class FotoPerfilController extends ServletController{
         }
         catch(Exception e){
             e.printStackTrace();
+            try {
+                response.sendRedirect("erro.html");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         finally{
             fecharConexaoComBanco();
         }
     }
 
-    private void enviarFotoPerfil(HttpServletRequest request, HttpServletResponse response) {
+    private void enviarFotoPerfil(HttpServletRequest request, HttpServletResponse response) throws ServerException {
         try (OutputStream os = response.getOutputStream()) {
             response.setContentType("image/gif");
             long idUsuario = Long.parseLong(request.getParameter("id"));
             os.write(fotoPerfilDAO.buscarBytesDaFoto(idUsuario));
             os.flush();
         } catch (NumberFormatException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw new ServerException("Erro no processamento da requisição");
         }
         
     }

@@ -25,15 +25,14 @@ public class LoginController extends ServletController{
         } catch (EmailNaoCadastradoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ServletException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch(Exception e){
             e.printStackTrace();
+            try {
+                response.sendRedirect("erro.html");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         finally{
             fecharConexaoComBanco();

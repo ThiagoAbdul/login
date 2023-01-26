@@ -2,6 +2,8 @@
 
 #fundo{
     height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    
 }
 
 main{height: 230px;width: 230px}

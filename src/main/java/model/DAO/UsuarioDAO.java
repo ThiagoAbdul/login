@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import exceptions.EmailNaoCadastradoException;
 import model.beans.Usuario;
 
-public class UsuarioDAO extends DAO{
+public class UsuarioDAO extends DAO<Usuario>{
 
     public void salvar(Usuario usuario) throws SQLException{
             em.getTransaction().begin();
@@ -45,6 +45,11 @@ public class UsuarioDAO extends DAO{
         em.getTransaction();
         em.merge(usuario);
         em.getTransaction().commit();
+    }
+
+    @Override
+    public Usuario buscar(Object primaryKey){
+        return em.find(Usuario.class, primaryKey);
     }
 
 }

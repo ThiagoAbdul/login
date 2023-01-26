@@ -10,7 +10,7 @@ import java.io.IOException;
 import model.beans.FotoPerfil;
 import model.beans.Usuario;
 
-public class FotoPerfilDAO extends DAO{
+public class FotoPerfilDAO extends DAO<FotoPerfil>{
 
     public void alterarFotoDePerfil(long id, byte[] bytesDaFoto){
         FotoPerfil fotoPerfil = em.find(FotoPerfil.class, id);
@@ -43,5 +43,9 @@ public class FotoPerfilDAO extends DAO{
         }
     }
 
+    @Override
+    public FotoPerfil buscar(Object primaryKey){
+        return em.find(FotoPerfil.class, primaryKey);
+    }
     
 }

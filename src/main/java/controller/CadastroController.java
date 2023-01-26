@@ -23,14 +23,16 @@ public class CadastroController extends ServletController {
             cadastrar(request);
             response.sendRedirect("login.jsp");
         } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
         catch (EmailJaCadastradoException e) {
             e.printStackTrace();
         }
         catch(Exception e){
             e.printStackTrace();
+            try {
+                response.sendRedirect("erro.html");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         finally{
             fecharConexaoComBanco();

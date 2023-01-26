@@ -22,22 +22,48 @@ public class AlterarFotoPerfilController extends ServletController{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        
-        try (BufferedInputStream streamPart = getStreamDaImagem(request)){
-            long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
-            fotoPerfilDAO = new FotoPerfilDAO();
-            fotoPerfilDAO.alterarFotoDePerfil(idUsuario, streamPart);
-            usuarioDAO = new UsuarioDAO();
-            Usuario usuario = usuarioDAO.getEm().find(Usuario.class, idUsuario);
+        Usuario usuario = null;
+        try (InputStream streamDaImagem = getStreamDaImagem(request)){
+            usuario = getUsuarioPelaRequest(request);
+            trocarFoto(streamDaImagem, usuario);
             request.setAttribute("usuario", usuario);
             request.getRequestDispatcher("home.jsp").forward(request, response);
 
         } catch (IOException | ServletException e) {
             e.printStackTrace();
+            response.setStatus(500);
+            if(usuario != null){
+                request.setAttribute("usuario", usuario);
+                try {
+                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                } 
+                catch (ServletException | IOException e1) {   
+                    e1.printStackTrace();
+                }
+            }
+            else{
+                try {
+                    response.sendRedirect("erro.html");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            
         }
         finally{
             fecharConexaoComBanco();
         }
+    }
+
+    private Usuario getUsuarioPelaRequest(HttpServletRequest request){
+        long idUsuario = Long.parseLong(request.getParameter("idUsuario"));
+        usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.buscar(idUsuario);
+    }
+
+    private void trocarFoto(InputStream streamDaImagem, Usuario usuario) throws IOException{
+        fotoPerfilDAO = new FotoPerfilDAO();
+        fotoPerfilDAO.alterarFotoDePerfil(usuario.getId(), streamDaImagem);
     }
 
     private BufferedInputStream getStreamDaImagem(HttpServletRequest request) 
